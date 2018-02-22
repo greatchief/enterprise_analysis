@@ -1,0 +1,43 @@
+---
+title: "Obstacles to Enterprise Success"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+library(tidyverse)
+library(plotly)
+library(oidnChaRts)
+library(highcharter)
+library(readstata13)
+library(ggplot2)
+setwd("C:/Users/Lelo/Google Drive/Big Data/WB Enterprise Surveys")
+ES2015MY <- read.dta13("Malaysia-2015-full data LN.dta")
+```
+
+## Introduction
+
+This post is the third in a series of my analysis of the 2015 Enterprise Surveys conducted by the World Bank. I obtained the data set directly from Enterprise Surveys (http://www.enterprisesurveys.org), The World Bank, for research purposes.
+
+## Biggest Obstacle to Enterprise Operations
+When asked what the main obstacles to business was here is what firms across the 5 regions had to say:
+```{r}
+ES2015MY %>%
+  group_by(region, obstacle) %>%
+  summarise(total = sum(id)) %>%
+  ungroup() %>%
+  hchart("bar",
+         hcaes(y = total,
+               x = region,
+               group = obstacle)) %>%
+  hc_plotOptions(series = list(stacking = "percent")) %>%
+  hc_tooltip(shared = TRUE)
+```
+
+Most state that competition from firms in the informal sector is the main challenge. In the East Coast of Peninsular Malaysia, it was Business Licensing and Permits. In Sabah/Sarawak, firms stated Customs and Trade Regulations, in addition to Practices of Informal Firms and Tax Rates.
+
+Data Source: Enterprise Surveys (http://www.enterprisesurveys.org), The World Bank

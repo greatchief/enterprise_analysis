@@ -1,0 +1,43 @@
+---
+title: "Drivers of Enterprise Performance"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+library(tidyverse)
+library(plotly)
+library(oidnChaRts)
+library(highcharter)
+library(readstata13)
+library(ggplot2)
+setwd("C:/Users/Lelo/Google Drive/Big Data/WB Enterprise Surveys")
+ES2015MY <- read.dta13("Malaysia-2015-full data LN.dta")
+```
+
+## Introduction
+
+This post is the second in a series of my analysis of the 2015 Enterprise Surveys conducted by the World Bank. I obtained the data set directly from Enterprise Surveys (http://www.enterprisesurveys.org), The World Bank, for research purposes.
+
+## Performance Drivers
+The panel below shows the relationship between exports and the share of sales from a new product or service. It appears that Manufacturing firms whose sales from a new product are over 50% are likely to export. Retail services, which is a domestic-oriented sector shows limited propensity to export and create new products and services. Note that each dot represents a city/town/village where the establishment is based.
+```{r}
+p <- ggplot(data = ES2015MY, aes(y = newprod_sales, x = exports)) +
+  geom_point(aes(text = paste("Location:", location)), size = 0.3) +
+  geom_smooth(aes(colour = industry, fill = industry)) + facet_wrap(~ industry) + theme(legend.position="none")
+ 
+(gg <- ggplotly(p))
+
+```
+Another driver of export propensity appears to be government or government-linked support as shown below. Firms whose main source of credit is state-owned banks export, on average, 20% of their sales.
+```{r}
+library(ggplot2)
+bp <- ggplot(data=ES2015MY, aes(x=k9, y=exports, fill=k9, outline=FALSE)) + geom_boxplot() + theme(legend.position="none")
+(gg <- ggplotly(bp + coord_flip()))
+```
+
+Data Source: Enterprise Surveys (http://www.enterprisesurveys.org), The World Bank
