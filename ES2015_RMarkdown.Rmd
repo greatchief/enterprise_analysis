@@ -15,7 +15,7 @@ library(oidnChaRts)
 library(highcharter)
 library(readstata13)
 library(ggplot2)
-setwd("C:/Users/Lelo/Google Drive/Big Data/WB Enterprise Surveys")
+setwd("C:/Users/**/WB Enterprise Surveys")
 ES2015MY <- read.dta13("Malaysia-2015-full data LN.dta")
 ```
 
