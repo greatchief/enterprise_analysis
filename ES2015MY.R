@@ -1,5 +1,4 @@
-rm(list=ls())
-setwd("C:/Users/Lelo/Google Drive/Big Data/WB Enterprise Surveys")
+rm(list=ls()
 library(readstata13)
 ES2015MY <- read.dta13("Malaysia-2015-full data.dta")
 
